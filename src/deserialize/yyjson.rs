@@ -111,7 +111,15 @@ pub fn deserialize_yyjson(
 }
 
 fn read_doc_default(data: &'static str, err: &mut yyjson_read_err) -> *mut yyjson_doc {
-    unsafe { yyjson_read_opts(data.as_ptr() as *mut c_char, data.len(), null_mut(), err) }
+    unsafe {
+        yyjson_read_opts(
+            data.as_ptr() as *mut c_char,
+            data.len(),
+            YYJSON_READ_ALLOW_INF_AND_NAN,
+            null_mut(),
+            err,
+        )
+    }
 }
 
 fn read_doc_with_buffer(data: &'static str, err: &mut yyjson_read_err) -> *mut yyjson_doc {
@@ -119,6 +127,7 @@ fn read_doc_with_buffer(data: &'static str, err: &mut yyjson_read_err) -> *mut y
         yyjson_read_opts(
             data.as_ptr() as *mut c_char,
             data.len(),
+            YYJSON_READ_ALLOW_INF_AND_NAN,
             &YYJSON_ALLOC.get_or_init(yyjson_init).alloc,
             err,
         )
