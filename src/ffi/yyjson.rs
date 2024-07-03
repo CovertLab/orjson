@@ -39,6 +39,7 @@ extern "C" {
     pub fn yyjson_read_opts(
         dat: *mut ::core::ffi::c_char,
         len: usize,
+        flg: yyjson_read_flag,
         alc: *const yyjson_alc,
         err: *mut yyjson_read_err,
     ) -> *mut yyjson_doc;
