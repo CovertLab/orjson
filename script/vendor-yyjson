@@ -12,11 +12,6 @@ sed -i 's/yyjson_api_inline void yyjson_doc_free/yyjson_api void yyjson_doc_free
 sed -i 's/(flg & (YYJSON_READ_NUMBER_AS_RAW | YYJSON_READ_BIGNUM_AS_RAW)) != 0/false/g' include/yyjson/yyjson.c
 sed -i 's/if (pre)/if (false)/g' include/yyjson/yyjson.c
 
-sed -i 's/!false/true/g' include/yyjson/yyjson.c
-sed -i 's/ && true//g' include/yyjson/yyjson.c
-sed -i 's/true && //g' include/yyjson/yyjson.c
-sed -i 's/unlikely(false)/false/g' include/yyjson/yyjson.c
-
 sed -i 's/YYJSON_TYPE_STR | YYJSON_SUBTYPE_NOESC/YYJSON_TYPE_STR/g' include/yyjson/yyjson.c
 
 sed -i 's/unlikely(pos == src)/false/g' include/yyjson/yyjson.c
@@ -26,11 +21,28 @@ sed -i 's/    if (!err) err = &dummy_err;//g' include/yyjson/yyjson.c
 sed -i 's/likely(!alc_ptr)/!alc_ptr/g' include/yyjson/yyjson.c
 
 sed -i 's/unlikely(read_flag_eq(flg, YYJSON_READ_##_flag))/false/g' include/yyjson/yyjson.c
-sed -i 's/has_read_flag(ALLOW_INF_AND_NAN)/false/g' include/yyjson/yyjson.c
+sed -i 's/has_read_flag(ALLOW_INF_AND_NAN)/true/g' include/yyjson/yyjson.c
 sed -i 's/has_read_flag(ALLOW_COMMENTS)/false/g' include/yyjson/yyjson.c
 sed -i 's/has_read_flag(BIGNUM_AS_RAW)/false/g' include/yyjson/yyjson.c
+sed -i 's/has_read_flag(ALLOW_TRAILING_COMMAS)/false/g' include/yyjson/yyjson.c
 sed -i 's/if (pre && \*pre)/if (false)/g' include/yyjson/yyjson.c
 sed -i 's/(pre && !false)/(false)/g' include/yyjson/yyjson.c
 
+sed -i 's/read_nan(false, \&cur, pre, val)/read_nan(false, \&cur, 0, val)/g' include/yyjson/yyjson.c
+sed -i 's/read_inf(sign, ptr, pre, val)/read_inf(sign, ptr, 0, val)/g' include/yyjson/yyjson.c
+sed -i 's/read_nan(sign, ptr, pre, val)/read_nan(sign, ptr, 0, val)/g' include/yyjson/yyjson.c
+sed -i 's/read_inf_or_nan(false, \&cur, pre, val)/read_inf_or_nan(false, \&cur, 0, val)/g' include/yyjson/yyjson.c
+sed -i 's/read_inf_or_nan(sign, \&cur, pre, val)/read_inf_or_nan(sign, \&cur, 0, val)/g' include/yyjson/yyjson.c
+sed -i 's/read_number(\&cur, pre, flg, val, \&msg)/read_number(\&cur, val, \&msg)/g' include/yyjson/yyjson.c
+sed -i 's/read_number_raw(ptr, pre, flg, val, msg)/true/g' include/yyjson/yyjson.c
+sed -i 's/read_string(\&cur, end, inv, val, \&msg)/read_string(\&cur, end, val, \&msg)/g' include/yyjson/yyjson.c
+
+sed -i 's/!false/true/g' include/yyjson/yyjson.c
+sed -i 's/&& true//g' include/yyjson/yyjson.c
+sed -i 's/true &&//g' include/yyjson/yyjson.c
+sed -i 's/true &&//g' include/yyjson/yyjson.c
+sed -i 's/unlikely(false)/false/g' include/yyjson/yyjson.c
+
 git apply include/yyjson-recursion-limit.patch
 git apply include/yyjson-reduce-unused.patch
+git apply include/yyjson-inf-fix.patch

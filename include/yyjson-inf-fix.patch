@@ -1,0 +1,20 @@
+diff --git a/include/yyjson/yyjson.c b/include/yyjson/yyjson.c
+index 29f9098..3a709ba 100644
+--- a/include/yyjson/yyjson.c
++++ b/include/yyjson/yyjson.c
+@@ -4401,7 +4401,6 @@ static_inline bool read_number(u8 **ptr,
+ } while (false)
+     
+ #define return_inf() do { \
+-    if (false) return_raw(); \
+     if (true) return_f64_bin(F64_RAW_INF); \
+     else return_err(hdr, "number is infinity when parsed as double"); \
+ } while (false)
+@@ -5006,7 +5005,6 @@ static_inline bool read_number(u8 **ptr,
+ } while (false)
+     
+ #define return_inf() do { \
+-    if (false) return_raw(); \
+     if (true) return_f64_bin(F64_RAW_INF); \
+     else return_err(hdr, "number is infinity when parsed as double"); \
+ } while (false)
